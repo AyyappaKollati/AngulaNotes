@@ -1,0 +1,182 @@
+                                                                   Ajax
+                                                                  =====
+
+--> ajax is used to replace part of the content of the in an html file.
+--> we dont need to refresh the page to load the data.
+--> we will use the load method to call the external file.
+
+     load(url,data,complete)
+     
+--> in the above load function only url is the required field. data and complete are the optional fields.
+--> data is the json object or string that sent to the server along with the request.
+--> complete is the callback function that is called when the request completes.
+--> if we don't want to load the complete page or we want to load the specific part of the page through ajax we will specify the id of the
+    specific part as the second(data) parameter.
+--> the last (complete) parameter is a callback function with three parameters
+               CallbackFunction(response,status,xhr);
+     $("body").load('abc.html',#idName, function(response,status,xhr){
+          console.log(xhr.status);
+          console.log(xhr.statusText);
+          console.log(response);
+     })
+--> if we don't want to display the response when the request is success then we can use the status message.
+      $("#btn").load('abc.html',#idName, function(response,status,xhr){
+          if(status=="error"){
+               console.log(xhr.status);
+               console.log(xhr.statusText);
+               console.log(response);
+               }
+      });
+--> in the above example the status messages and response will display only when there is an error.
+--> we can also use the jquery get method to update the page content without page refresh.
+     get(url,data,complete,dataType);
+--> here also only url is required field.
+--> when using get method we don't specify the selector. we will write the get method as shown below.
+       $.get('abc.html',#idName, function(response){
+          $("body").html(response);
+     });
+--> here the response parameter will have the response from the external file.
+
+    jquery get v/s load methods:-
+    =============================
+--> load function used to load only the html data from the server. but the get function can be used to load any type of data (xml,json,script,html).
+--> load function use get or post request depend on the data parameter specified or not, post method is used if the data is provided.
+    get function always uses the get request.
+--> with load function we specify the selector first, the html content retrived from server is automatically inserted into dom elements 
+    matched the selector.
+    with get function we don't need to specify the selector, we use the callback function to insert data recived from the server into the
+    Dom elements.
+
+Load json data using jquery get function :-
+==========================================
+--> the last parameter (dataType) of the get function is to specify which type of data we are expecting from server (html,script,xml,etc..) as shown below..
+-->  $.get('abc.html',#idName, function(response){
+          $("body").html(response);
+     },'html');
+--> we can also call the json file in the same way, by using response we display the values as
+     response.text (or) response.value .......
+--> when we are calling the json file we will set the dataType parameter as json in get function.
+          $.get('abc.txt',#idName, function(response){
+               $("body").html(response.value);
+          },'json');          
+
+--> below is the live example for username and password validation in login page.
+                         $.get("credentials.json",function(response){
+                        credentialsList=response;
+                        $.each(credentialsList, function(i, item) {
+                            if(credentialsList[i].name== EnteredUserName && credentialsList[i].password==EnteredPassWord){
+                                console.log("success");
+                                $("body").load("home.html")
+                            }
+                            else{
+                                $(".error-msg").show();
+                            }
+                        });
+                    });
+    --> in the above first we are calling the json file and we are executing the callback function to use the data.
+    --> we are looping through the result json object using jquery each function.
+
+                                                  Json
+                                                 ======
+                                                 
+--> json is text only, written with JavaScript object notation.
+--> When exchanging data between a browser and a server, the data can only be text.
+--> JSON is text, and we can convert any JavaScript object into JSON, and send JSON to the server.
+--> We can also convert any JSON received from the server into JavaScript objects.
+--> If you have data stored in a JavaScript object, you can convert the object into JSON, and send it to a server using stringify buillt-in function.
+          var myObj = {name: "John", age: 31, city: "New York"};
+          var myJSON = JSON.stringify(myObj);
+--> If you receive data in JSON format, you can convert it into a JavaScript object using parse built-in function.
+          var myJSON = '{"name":"John", "age":31, "city":"New York"}';
+          var myObj = JSON.parse(myJSON);
+          document.getElementById("demo").innerHTML = myObj.name;
+--> JSON makes it possible to store the json objects in localstorage.
+          //Storing data:
+      myObj = {name: "John", age: 31, city: "New York"};
+      myJSON = JSON.stringify(myObj);
+      localStorage.setItem("testJSON", myJSON);
+
+      //Retrieving data:
+      text = localStorage.getItem("testJSON");
+      obj = JSON.parse(text);
+      document.getElementById("demo").innerHTML = obj.name;
+
+--> JSON syntax is derived from JavaScript object notation syntax:
+      Data is in name/value pairs
+      Data is separated by commas
+      Curly braces hold objects
+      Square brackets hold arrays
+                    "name":"John"
+--> json value can be the following..
+          a string
+          a number
+          an object (JSON object)
+          an array
+          a boolean
+          null
+                { "name":"John" }
+                { "age":30 }
+                "employee":{ "name":"John", "age":30, "city":"New York" }
+                "employees":[ "John", "Anna", "Peter" ]
+                 { "sale":true }
+                 { "middlename":null }
+--> When receiving data from a web server, the data is always a string.
+--> Parse the data with JSON.parse(), and the data becomes a JavaScript object.
+    Imagine we received this text from a web server:
+      '{ "name":"John", "age":30, "city":"New York"}'
+--> Use the JavaScript function JSON.parse() to convert text into a JavaScript object:
+      var obj = JSON.parse('{ "name":"John", "age":30, "city":"New York"}');
+            Make sure the text is written in JSON format, or else you will get a syntax error.
+--> Values in a JSON object can be another JSON object.
+          myObj = {
+              "name":"John",
+              "age":30,
+              "cars": {
+                  "car1":"Ford",
+                  "car2":"BMW",
+                  "car3":"Fiat"
+              }
+           }
+    x = myObj.cars.car2;
+    
+--> Use the delete keyword to delete properties from a JSON object:
+      delete myObj.cars.car2;
+-->Arrays can be values of an object property:
+      {
+      "name":"John",
+      "age":30,
+      "cars":[ "Ford", "BMW", "Fiat" ]
+      }
+--> You access the array values by using the index number:
+      x = myObj.cars[0];
+
+Looping Through an Array
+  
+--> You can access array values by using a for-in loop:
+      for (i in myObj.cars) {
+          x += myObj.cars[i];
+      }
+--> Or you can use a for loop:
+          for (i = 0; i < myObj.cars.length; i++) {
+              x += myObj.cars[i];
+          }
+
+--> Nested Arrays in JSON Objects
+  Values in an array can also be another array, or even another JSON object:
+  myObj = {
+      "name":"John",
+      "age":30,
+      "cars": [
+          { "name":"Ford", "models":[ "Fiesta", "Focus", "Mustang" ] },
+          { "name":"BMW", "models":[ "320", "X3", "X5" ] },
+          { "name":"Fiat", "models":[ "500", "Panda" ] }
+      ]
+   }
+   To access arrays inside arrays, use a for-in loop for each array:
+    for (i in myObj.cars) {
+        x += "<h1>" + myObj.cars[i].name + "</h1>";
+        for (j in myObj.cars[i].models) {
+            x += myObj.cars[i].models[j];
+        }
+    }
+
