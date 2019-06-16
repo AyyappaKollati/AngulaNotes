@@ -1,0 +1,448 @@
+In this file we will create one application by having the basic underastanding on express server, mongodb, angular, node.
+
+================================================================================================================
+  Reference from:- https://www.youtube.com/watch?v=zclGgvQKmq4&index=4&list=PLC3y8-rFHvwg2RBz6UplKTGIXREj9dV0G
+================================================================================================================
+  
+Express Server:-
+===============
+--> first create one folder which contain entire authentication.
+--> then we need to create one more folder (ex:- server) inside our root folder, which contains the backend code.
+--> in that sub folder we should intialize the package.json file.
+--> to initialize the package.json file, we need to run the command "npm init --yes" .
+--> to install Express server we should have the node installed.
+--> then we need to install the dependencies by run the command "npm install express body-parser --save"
+        --> in the above command express is our server.
+        --> body-parser is the middleware to handle our request with form data.
+--> now we are done with the installing experss and it's dependencies.
+--> we also need to create one server.js file, to write our server code.
+--> in the server.js file, we begin by requiring the packages we just installed.
+        --> const express = requrire("express")
+            const bodyParser = require("body-parser")
+            const PORT = 3000  // Here we need to specify the port number that express server will run on
+            const app = express()  // Here we are creating instance of the express
+            app.use(bodyParser.json());  // Here are are specifing to the bodyParser to handle the json data as well
+            app.get('/',function(req,res){    // Here we are testing with the get request and there is one callback function with the req,res parameters
+               res.send("This is Server data");
+            })
+            app.listen(PORT,function(){        //Here we are listening the requests from the specified port number with a callback function.
+              console.log("Server started");
+             })
+--> to start the server we need to move into the server folder and then execute "node server" command. 
+--> now if we make a request from the browser to localhost://3000 we should see the message as "This is Server data".
+--> but it is better to have seperate route file for all the api requests.
+--> now create one folder (ex:- routes) inside the server folder.
+--> create one file with the api.js name in the routes folder to write all the api routes.
+--> in the api.js we will have the below code
+       const express = requrire("express")
+       const router  = express.Router();  
+       router.get('/',function(req,res){  //Handling the get request
+         res.send("api route data");
+       });
+       module.exports = router; // Finally we exports the router
+ --> now we need to tell our server to use this route.
+ --> we will add below lines of code in the server.js file.
+          const api = require('./routes/api')
+          app.use('/api',api)
+  --> now when we make a request from the broweser as localhost:3000/api then the server knows it should handle by the api route.
+  --> with all these changes we need to restart our server (ctl + c then node server)
+
+--> our next step is to connect mongodb to store and retrive user information.
+--> https://www.mlab.com is online a database service provider.  
+--> there we need to create account to use db services.
+--> after login into account click on the create new button in the mongodb deployments section.
+--> select plan type and click on continue.
+--> select region and click on continue.
+--> select your db name and click on continue and then click on submit order.
+--> now we should see the our database name in the list of databases.
+--> click on your db.
+--> in the collection section click on add collection then provide name for the collection.
+--> next click on users tab and then click on add db user to create user by providing dbusername and password.
+--> now we completed our mongodb setup.
+
+--> when user makes a request to the server that maybe get,post,delete,put.
+--> to make this operations server should connect to db.
+--> for these interaction we make use of mongoose.
+--> data in mongodb is represented as js object.
+--> mongoose converts the data in database to javascript object to use in our application.
+--> there are alternatives like mongo js, native mongo client but mongoose is simpler.
+--> to install the mongoose, in the server folder run "npm install --save mongoose" command
+--> to represent data as object we need to have the object schema (or) blueprint in our server.
+--> to create blueprint create one folder(ex:-modules) in the server folder.
+--> within the modules folder create one js file(ex:-user.js)
+--> in the user.js we will have the below code.
+        const mongoose = require('mongoose') //Here we are including mongoose
+        const Schema = mongoose.Schema  //Here we are getting the instance of the mongoose schema
+        const userSchema = new Schema({  //Here we are declaring the blueprint of userSchema
+            userName:String,
+            password:String
+        });
+--> now we need to export our schema
+        module.exports = mongoose.model('user',userSchema,'users');  //Here user is the model name and users is th collection name created in the db.
+
+--> now we need to connect to db from server to make the operations.
+--> all the db connections happen in the api.js file
+          const mongoose = require("mongoose")
+          const db = "uri"  //Here we get this connection uri from mlab db 
+--> then replace the db username and password words in the uri with your db credentials.
+--> now we need to connect to db using the below line
+         mongoose.connect(db,err=>{
+            if(err){
+              console.log("Error" + err);
+            }
+            else{
+              console.log("db connection success");
+            }
+         })
+ --> now we need to run the node server command to start the server.
+ --> then we should see "db connection success" message if the connection success.
+
+Creating API to register new user:-
+====================================
+--> first we need to create our required api in our router file (api.js).
+--> in the below example we are creating our register api.
+         router.post('/register',(req,res) => {        // Here we are using post to register a user
+             let Userdata = req.body                   // Here body parser extracting the body portion of the incoming message
+            let user = new User(Userdata)              // Here we are using the userschema created in the the user.js
+            user.save(function(error,registeredUser){  // Here we are saving the user information into our db.
+                if(error){                             // it will return error if it fails to save data into our db.
+                    console.log("Error" + error)
+                }
+                else{                                   // if the info successfully inserted into our db, it sets status as 200, sends the user information.
+                    res.status(200).send(registeredUser)
+                }
+            })
+        })
+ --> we can test our api using postman without having the UI. 
+
+Creating User Login API :-
+==========================
+--> now we will create one user login api using post method.
+--> we will create our api in the router file (api.js)
+
+          router.post('/login',function(req,res){    // Here we are using post method.
+          let userData = req.body                    // we are extracting the body from the information
+          User.findOne({userName:userData.userName},function(error,user){      //using findOne method we get the matching record
+              if(error){                                 // it gives error if the connection fails
+                  console.log("Error" + error)
+              } 
+              else{
+                  if(!user){                            // condition to check if the record not found means this is an invalid email
+                      console.log("Invalid Email..")
+                      res.status(401)                   // we are setting the status as 401(unauthorized)
+                  }
+                  else if(user.password != userData.password){  // if the record found then we are checking for the password
+                      console.log("invalid password")
+                      res.status(401)
+                  }
+                  else{
+                      console.log("user valid")                 // if all the above conditions fails then it executes this block
+                      res.status(200).send(user)                // we are setting the status as 200 (OK)
+                  }
+              }
+          })
+      })
+ 
+--> then we will call this api from the postman with the input data (username,password). we will see the response.
+
+Connecting our api with UI:-
+==================================
+--> till now we are testing our api with postman now we will see how to connect our api with the UI.
+
+connecting registration api:-
+============================
+--> first create one angular application in the root folder by using ng new project-name --routing.
+--> then create components for the login,registration,events,special events.
+--> Now assign the routes and create one registration screen with the username and password fields.
+--> after submit the username and password fields we will click on submit button where we execute one function in the ts file.
+--> from the function in the ts file we will take the username and password and then sent them to the service file. 
+--> we need to import Http or HttpClient in the service to make requests to the api.
+--> before sending this data we need to make our service file ready by adding the below code in service file. 
+        url:string = "http://localhost:3000/api/register"; //URL where our register api written
+         registerUser(user){                           
+             return this.http.post(this.url,user);   // here we are calling the regiser api using post method
+         }
+--> from service it retuns the user, which contains either response or error.
+--> in the ts file we will subscribe to this post call using subscribe method and checks for the response and errors.
+--> in the ts file function will written as shown below..
+           registerUser(){           //Function to execute when user submits data from UI
+              this.auth.registerUser(this.userDetails) //calling auth service registerUser function with the user submitted details
+                  .subscribe(                    //subscribing to the post call to get the results
+                    res => console.log(res),     //Displaying the response if the call success
+                    err => console.log(err)      // Displaying the error if any occur.
+                  )
+            }
+--> after completing all the above steps and submits the form, we will get one error as cross origin error.
+--> that means our angular app is running in the port 4200 and our server running in the port 3000
+--> to allow this cross origin redirects we need to install cors in the server using npm install --save cors
+ --> after installing the cors need to add the below two lines in the server.js file
+                  const cors = require('cors')
+                  app.use(cors())
+ --> now restart the server.
+--> enter the user registration from fields, now we should see user data is logged into the db as expected. 
+
+connecting login api:-
+============================
+--> Login process also same as our registration process.
+--> first design our login page template.
+--> onsubmitting user credintials execute one function in the ts file.
+--> there we are calling service file function where the http call is made.
+--> we need to change the provide the url to the service file where we have our api.
+--> then the function in the service executes http call then returns data which we will get using subscribe method in ts file.
+--> subscribe file is having two parameters one is for response(res) and other is for error(err).
+
+Creating Events api:-
+====================
+--> in api.js file we will create one get function for events 
+        router.get('/events', (req, res) => {
+    let events = [
+        {
+            "_id": "1",
+            "name": "Auto Expo",
+            "description": "lorem ipsum",
+            "date": "2012-04-23T18:25:43.511Z"
+        },
+        {
+            "_id": "2",
+            "name": "Auto Expo",
+            "description": "lorem ipsum",
+            "date": "2012-04-23T18:25:43.511Z"
+        },
+        {
+            "_id": "3",
+            "name": "Auto Expo",
+            "description": "lorem ipsum",
+            "date": "2012-04-23T18:25:43.511Z"
+        },
+        {
+            "_id": "4",
+            "name": "Auto Expo",
+            "description": "lorem ipsum",
+            "date": "2012-04-23T18:25:43.511Z"
+        },
+        {
+            "_id": "5",
+            "name": "Auto Expo",
+            "description": "lorem ipsum",
+            "date": "2012-04-23T18:25:43.511Z"
+        },
+        {
+            "_id": "6",
+            "name": "Auto Expo",
+            "description": "lorem ipsum",
+            "date": "2012-04-23T18:25:43.511Z"
+        }
+    ]
+    res.json(events);
+})
+
+--> here we are hardcoded the data in the events.
+--> now we will call this api from our ts file within the ngOnInit().
+              ngOnInit() {
+                  this.auth.getEvents()
+                  .subscribe(
+                    res => this.events = (JSON.parse(res['_body'])),
+                    err => console.log(err)
+                  )
+              }
+--> in our events.ts file we will crate one events of empty array type.
+--> we will assign our response to the events array.
+--> then we will loop through the events array in the template file.
+--> the same process for special events also.
+--> now we have completed designing of all four components and we also done with the login and register functionality.
+
+--> now we will see how to allow only authenticated user to view special events.
+
+--> to generate and verify tokens with the server we will use jsonwebtoken (jwt).
+
+JWT :-
+=====
+--> we need to install the json web tokens in the server from npm using the below command.
+      npm install jsonwebtoken --save.
+--> JWT is a json object that is defined as a safe way to represent a set of information between two parties.
+--> a token is composed of a header.payload.signature 
+    header part consists of the two parts type of the token and type of the hash algoritham that is used.
+    payload consists data that is need to store inside the jwt
+    signature is used to verify the token.
+--> we will generate the token using the below comand
+      jwt.sign(payload,secretkey)
+--> after generating the token in server side, we will same token send it to frontend. then we will check the two tokens.
+--> we will use the below command to verify the token with the frontend.          
+      jwt.verify(token,secretkey)
+--> in the api.js we will write the code as shown below..     
+    const jwt = require('jsonwebtoken')
+--> we will change the register, login api's as shown below..
+       
+    router.post('/register', (req, res) => {
+    let Userdata = req.body
+    // console.log(Userdata)
+    let user = new User(Userdata)
+    user.save(function (error, registeredUser) {
+        if (error) {
+            console.log("Error" + error)
+        }
+        else {
+            let payload = { subject: user._id }      // assigning payload data
+            let token = jwt.sign(payload, 'secretkey')  // creating jwt token
+            res.status(200).send({ token })     // sending jwt token with the response
+        }
+    })
+})
+--> now we will take this token in the frontend and set this token in the localstorage as shown below..
+      registerUser(){ 
+    this.auth.registerUser(this.userDetails)
+        .subscribe(
+          res => {
+          let token =  res['token']       // extracting the token
+            localStorage.setItem("token",token)   // setting the token in the local storage
+            this._router.navigate(['/special-events'])  // redirecting to special events after registration.
+          },
+          err => console.log(err)
+        )
+  }
+
+
+Auth Guard:-
+============
+--> we will use auth guard, to allow only authenticated user to view special events.
+--> auth gruad will check the user logged in or not, if user logged in then it will allow user to view special events.
+--> first we need to create auth gurad service ts file.
+          ng g s auth.guard
+--> it will create one auth.guard.ts and auth.guard.spec.ts files.
+--> in the auth.guard.ts file we will check the userlogged in or not, using below function.
+      import { Injectable } from '@angular/core';
+      import { CanActivate, Router} from '@angular/router';
+      import { AuthService } from './auth.service';
+      @Injectable({
+        providedIn: 'root'
+      })
+      export class AuthGuard implements CanActivate {
+        constructor(private _router:Router, private auth:AuthService){}
+
+          canActivate():boolean{
+            if(this.auth.loggedInUser()){
+              return true;
+            }
+            else{
+              this._router.navigate(['/login']);
+              return false;
+            }
+          }
+
+      }
+--> here we are implementing the canActivate interface, when we are implementing the canActivate interface we need to provide implementation
+    for canActivate() method.
+--> in the canActivate() method we will write the logic to check if the user logged in.
+--> we will write in the routing file for the special events as shown below...
+       {
+        path: 'special-events', 
+        component: SpecialEventsComponent,
+        canActivate:[AuthGuard]
+     }
+--> now when we make a request to special-events page, it will execute the canActivate method in the authguard file, in the canActivate 
+    method we will check the user logged in or not, if it returns false, then the navigation fails.
+--> in the canActivate() method we will call the loggedInUser() method in the auth.service.ts file.
+--> in the loggedInUser() method we will check if the user is logged in or not by checking the local storage token item exist or not.
+--> but with this approach there is one problem in the authentication, that is if the user create one local storage item with the token name,
+    then the canActivate() method will take it as a valid token and it allows the navigation.
+--> but we need to check this jwt token valid or not with the server, then only we should allow navigation.
+--> to check the token with the server, we need to send the token back to server.
+--> we will send the to with the server by using interceptor.
+--> interceptor intercepts the outgoing http request transforms them and sends it to the server.
+        ng g s token-interceptor 
+--> now we will write the below code in the token-interceptor.service.ts file
+        import { Injectable } from '@angular/core';
+        import { HttpInterceptor } from '@angular/common/http';
+        import {AuthService} from './auth.service'
+        @Injectable()
+        export class TokenInterceptorService implements HttpInterceptor {
+          constructor(private auth:AuthService) { }
+          intercept(req,next){                     // Implementing intercept method.
+            let setToken = this.auth.getToken();  // getting the token from the localstorage
+            let tokenreq = req.clone({             // we are setting the localstorage token into api request headers.
+              setHeaders: {
+                Authorization :`Bearer ${setToken}` 
+              }
+            })
+            return next.handle(tokenreq)
+          }
+        }
+--> need to import and register the auth service, auth guard, token interceptor in the app module.ts 
+--> we will import the interceptor in the providers section is slightly different
+        providers: [
+          AuthService,
+          AuthGuard,
+          {
+            provide:HTTP_INTERCEPTORS,
+            useClass:TokenInterceptorService,
+            multi:true
+          }
+        ]
+--> but need to consider one thing that is from angular 4.3+ interceptor only work with http client, it will not work with the 
+    http.
+--> now we need to verify token is valid or not with the server.
+--> to verify the token we will write the verifytoken() method in the api.js file as shown below..
+    
+    function verifytoken(req, res, next) {
+    try{
+        if (!req.headers.authorization) {                              // checking if the authoriation is present or not in the request headers
+            return res.status(401).send("unauthorized request")        // sending 401 if the authorization is not present
+        }
+        let token = req.headers.authorization.split(' ')[1];          // extracting the token from the bearer keyword 
+        if (token == "null") {                                         // checking if the token is null
+            return res.status(401).send("unauthorized request")
+        }
+        let payload = jwt.verify(token, 'secretkey');                   // extracting payload from the token
+        if (!payload) {                                                 // checking if the payload is exists
+            return res.status(401).send("unauthorized request")
+        }
+        req.userId = payload.subject         
+        next()                                                      // allowing the navigation
+    }
+    catch (e) {                                                          // to handle if any exception occurs.
+        return res.status(800).send("Invalid token") 
+        }
+}
+--> at last we need to add middle ware function to the special events api.
+  router.get('/special', verifytoken, function (req, res){-----}
+--> when we make a request to special events it will executes the middle ware function that is verifytoken().
+--> if the any condition fails then the special events api doesn't work.
+--> now we need to check in the special events if any error is occured.
+       ngOnInit() {
+          this.auth.getSpecialEvents()
+          .subscribe(
+            res => this.events = res,
+            err => {
+              if(err instanceof HttpErrorResponse){        // checking if the error is instance of http instance
+                if(err.status === 401){                  // checking the status of error
+                  this.router.navigate(['./login']);
+                }
+                if(err.status === 800){
+                  this.router.navigate(['./login']);
+                }
+              }
+            }
+          )
+        }
+
+--> now we need to implement the logout function, as shown below 
+     <ul class="navbar-nav mr-auto">
+          <li class="nav-item" *ngIf='!auth.loggedInUser()'>
+            <a class="nav-link" routerLink="/login" routerLinkActive="active">Login
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item" *ngIf='!auth.loggedInUser()'>
+            <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
+          </li>
+          <li class="nav-item"  *ngIf='auth.loggedInUser()'>
+            <a class="nav-link" routerLink="/login" (click)="auth.logoutUser()" routerLinkActive="active">Logout</a>
+          </li>
+        </ul> 
+  in the auth service ts file we define the logoutUser function as below:--      
+  logoutUser(){
+    localStorage.removeItem('token');
+  }
+--> it will show the logout button only if the user is logged in.        
+        
+          ------------  with this we have completed the login and registration authorization  ----------------------------
