@@ -1,0 +1,404 @@
+JQuery :-
+========
+     Differences Between jQuery .bind() vs .live() vs .delegate() vs .on()
+   ========================================================================
+    Bind:-
+    ======
+         The .bind() method attaches the event handler directly to the DOM element . The .click() method is just a shorthand way to write the .bind() method.
+                $( "#members li a" ).bind( "click", function( e ) {} ); 
+                $( "#members li a" ).click( function( e ) {} ); 
+         Pros:-
+         =====
+                 This methods works across various browser implementations.
+                It is pretty easy and quick to wire-up event handlers.
+                The shorthand methods (.click(), .hover(), etc...) make it even easier to wire-up event handlers.
+        Cons:-
+        =====
+                The method attaches the same event handler to every matched element in the selection.
+                It doesn't work for elements added dynamically that matches the same selector.
+                There are performance concerns when dealing with a large selection.
+    Live:-
+    ======
+        --> live method attaches the event to the document.
+        --> By registering this information on the document it allows one event handler to be used for all events that have bubbled up to it. 
+        -->  The .live() method attaches the event handler to the root level document along with the associated selector and event information.
+                       $( "#members li a" ).live( "click", function( e ) {} );
+                       
+       --> The good thing about this code as compared to the .bind() example above is that it is only attaching the event handler once to the document instead of multiple times.
+          Pros:-
+         ======
+                There is only one event handler registered instead of the numerous event handlers that could have been registered with the .bind() method.
+                The upgrade path from .bind() to .live() is very small. All you have to do is replace "bind" to "live".
+                Elements dynamically added to the DOM that match the selector magically work because the real information was registered on the document.
+                You can wire-up event handlers before the document ready event helping you utilize possibly unused time.
+        Cons :-
+       ======
+                This method is deprecated as of jQuery 1.7 and you should start phasing out its use in your code.
+                Chaining is not properly supported using this method.
+                The selection that is made is basically thrown away since it is only used to register the event handler on the document.
+                Using event.stopPropagation() is no longer helpful because the event has already delegated all the way up to the document.
+                Since all selector/event information is attached to the document once an event does occur jQuery has match through its large metadata store using the matchesSelector method to determine which event handler to invoke, if any.
+                Your events always delegate all the way up to the document. This can affect performance if your DOM is deep.
+                
+    Delegate :-
+    =========
+         --> The .delegate() method behaves in a similar fashion to the .live() method, but instead of attaching the selector/event information to the document, you can choose where it is anchored. 
+         -->  The .delegate() method behaves in a similar fashion to the .live()  method, but instead of attaching the event handler to the document, 
+                you can choose where it is anchored ( "#members" ). The selector and event information ( "li a" & "click" ) will be attached to the "#members" element. 
+                        $( "#members" ).delegate( "li a", "click", function( e ) {} );
+         --> The .delegate() method is very powerful. The above code will attach the event handler to the unordered list (“#members”) along with the selector/event information.
+         --> This is much more efficient than the .live() method that always attaches the information to the document.
+         Pros :-
+         =====
+                You have the option of choosing where to attach the selector/event information.
+                The selection isn't actually performed up front, but is only used to register onto the root element.
+                Chaining is supported correctly.
+                jQuery still needs to iterate over the selector/event data to determine a match, but since you can choose where the root is the amount of data to sort through can be much smaller.
+                Since this technique uses event delegation, it can work with dynamically added elements to the DOM where the selectors match.
+                As long as you delegate against the document you can also wire-up event handlers before the document ready event.
+                Cons
+         Cons :-
+         =====
+                Changing from a .bind() to a .delegate() method isn't as straight forward.
+                There is still the concern of jQuery having to figure out, using the matchesSelector method, which event handler to invoke based on the selector/event information stored at the root element. 
+                However, the metadata stored at the root element should be considerably smaller compared to using the .live() method.
+      On :-
+      =====
+       --> on() method is the combination of all the possible event methods.
+       --> it is depend on how you call the on method.
+                
+         // Bind
+                $( "#members li a" ).on( "click", function( e ) {} ); 
+                $( "#members li a" ).bind( "click", function( e ) {} ); 
+
+        // Live
+                $( document ).on( "click", "#members li a", function( e ) {} ); 
+                $( "#members li a" ).live( "click", function( e ) {} );
+
+        // Delegate
+                $( "#members" ).on( "click", "li a", function( e ) {} ); 
+                $( "#members" ).delegate( "li a", "click", function( e ) {} );
+               
+  The biggest take aways are:-
+  ============================
+        --> Using the .bind() method is very costly as it attaches the same event handler to every item matched in your selector.
+        --> You should stop using the .live() method as it is deprecated and has a lot of problems with it.
+        --> The .delegate() method gives a lot of "bang for your buck" when dealing with performance and reacting to dynamically added elements.
+        --> That the new .on() method is mostly syntax sugar that can mimic .bind(), .live(), or .delegate() depending on how you call it.
+        --> The new direction is to use the new .on method. Get familiar with the syntax and start using it on all your jQuery 1.7+ projects.
+
+               
+Q) What is difference between $(this) and this in jQuery ?
+      $(document).ready(function(){
+          $('#clickme').click(function(){
+           alert($(this).text());
+           alert(this.innerText);
+          });
+       });
+     this and $(this) references the same element but the difference is that “this” is used in traditional way but when “this” is used 
+     with $() then it becomes a jQuery object on which we can use the functions of jQuery.?
+     In the example given, when only “this” keyword is used then we can use the jQuery text() function to get the text of the element, 
+     because it is not jQuery object. Once the “this” keyword is wrapped in $() then we can use the jQuery function text() to get the text
+     of the element.
+               
+               
+Java Script :-
+=============
+-->  Js is case sensitive.
+--> in js semicolons are optional.
+--> // for single line comment
+--> /*  */ for multiple line comment.
+--> <noscript> is used to display a message to the user if the browser doesn't support the js.
+--> on loading of the html page in the browser
+        --> first it will start parsing html from top.
+        -->
+
+
+--> js can change the css and the html elements
+--> js can change the image source attribute
+     <button onclick="document.getElementById('myImage').src='pic_bulbon.gif'">Turn on the light</button>
+     when you click on the button it will change the #myImage source attribute
+--> js can change the css of dom elements
+     <button type="button" onclick="document.getElementById('demo').style.fontSize='35px'">Click Me!</button>
+     when you click the button it will change the #demo text font size to 35px
+--> js can hide the dom elements
+     document.getElementById("demo").style.display = "none";
+--> js can show the hidden dom elements
+     document.getElementById("demo").style.display = "block";
+--> JavaScript can "display" data in different ways:
+          Writing into an HTML element, using innerHTML.
+               document.getElementById("demo").innerHTML = 5 + 6;
+          Writing into the HTML output using document.write().
+               document.write(5 + 6);
+               Using document.write() after an HTML document is loaded, will delete all existing HTML.
+               The document.write() method should only be used for testing.
+          Writing into an alert box, using window.alert().
+          Writing into the browser console, using console.log().
+--> Semicolons separate JavaScript statements.
+--> Ending statements with semicolon is not required, but highly recommended.
+--> For best readability, programmers often like to avoid code lines longer than 80 characters.
+--> If a JavaScript statement does not fit on one line, the best place to break it is after an operator.
+--> When let is used to declare the i variable in a loop, the i variable will only be visible within the loop.
+--> using var, the variable declared in the loop redeclares the variable outside the loop.
+--> 
+          function nodeSimplified(){
+            let a =10;
+            let a =20; //throws syntax error
+            console.log(a); 
+          }
+          
+          function nodeSimplified(){ 
+            var a =10;   
+            var a =20;   
+            console.log(a);  //output 20 
+          }
+--> const
+    ======
+     const statement values can be assigned once and they cannot be reassigned. The scope of const statement works similar to let statements.          
+          function nodeSimplified(){
+            const MY_VARIABLE =10;
+            console.log(MY_VARIABLE);  //output 10
+            MY_VARIABLE =20;           //throws type error
+            console.log(MY_VARIABLE); 
+          }
+     but the values of array and the object declared as const can be changed and also can be added
+     
+--> adding click event to a element using it's class name :-
+==============================================================
+<p class="first">first</p>
+<p class="first">second</p>
+<p class="first">third</p>
+
+<script>
+var classList = document.getElementsByClassName("first");
+for(var i=0; i<classList.length; i++){
+	classList[i].addEventListener("click",showAlert,false)
+}
+
+	function showAlert(){
+    	alert("data");
+    }
+
+--> adding click event to a element using it's Id :-
+==============================================================
+var classList = document.getElementById("paragraph");
+classList.addEventListener("click",showAlert,false);
+	function showAlert(){
+    	alert("data");
+    }
+    
+--> adding class to the clicked element using onclick:-
+=======================================================
+<p id="paragraph">first</p>
+<p class="first" onclick="showAlert(this)">second</p>
+<p class="first">third</p>
+
+<script>
+	function showAlert(ele){
+    	ele.classList.add("bg-blue");
+    }
+</script>
+
+
+--> toggle class on the clicked element in navbar :-
+    ===============================================
+    <div id="buttonsList">
+	<button class="btn active">button</button>
+	<button class="btn">button</button>
+	<button class="btn">button</button>
+	<button class="btn">button</button>
+   </div>
+
+	<script>
+		var buttonsList = document.getElementById("buttonsList");
+
+		var navButtons = buttonsList.getElementsByClassName("btn");
+	    for(var i=0 ; i<navButtons.length ;i++){
+		navButtons[i].addEventListener("click",function(){
+			var current = document.getElementsByClassName("active");
+		    current[0].className =  current[0].className.replace(" active", "");
+		    this.className+= " active";
+		},false)
+	    }
+
+	</script>
+
+--> toggle class on the clicked element :-
+===========================================
+  <div id="buttonsList">
+	<button class="btn active">button</button>
+	<button class="btn">button</button>
+	<button class="btn">button</button>
+	<button class="btn">button</button>
+  </div>
+
+  <script>
+	var buttonsList = document.getElementById("buttonsList");
+    
+   	var navButtons = buttonsList.getElementsByClassName("btn");
+    for(var i=0 ; i<navButtons.length ;i++){
+    	navButtons[i].addEventListener("click",function(){
+           this.classList.toggle("active");
+        },false)
+    }
+  </script>
+
+--> add class to the clicked element :-
+=========================================
+  <div id="buttonsList">
+	<button class="btn active">button</button>
+	<button class="btn">button</button>
+	<button class="btn">button</button>
+	<button class="btn">button</button>
+  </div>
+
+<script>
+	var buttonsList = document.getElementById("buttonsList");
+    
+   	var navButtons = buttonsList.getElementsByClassName("btn");
+    for(var i=0 ; i<navButtons.length ;i++){
+    	navButtons[i].addEventListener("click",function(){
+           this.classList.add("active");
+        },false)
+    }
+
+--> remove class on the clicked element :-
+==========================================
+  <div id="buttonsList">
+	<button class="btn active">button</button>
+	<button class="btn">button</button>
+	<button class="btn">button</button>
+	<button class="btn">button</button>
+  </div>
+
+<script>
+     var buttonsList = document.getElementById("buttonsList");
+    var navButtons = buttonsList.getElementsByClassName("btn");
+    for(var i=0 ; i<navButtons.length ;i++){
+    	navButtons[i].addEventListener("click",function(){
+           this.classList.remove("active");
+        },false)
+    }
+</script>
+
+--> toggle class on clicked element:-
+=====================================
+   <div id="buttonsList">
+	<button class="btn active">button</button>
+	<button class="btn">button</button>
+	<button class="btn">button</button>
+	<button class="btn">button</button>
+  </div>
+
+   <script>
+	var buttonsList = document.getElementById("buttonsList");
+    
+   	var navButtons = buttonsList.getElementsByClassName("btn");
+    for(var i=0 ; i<navButtons.length ;i++){
+    	navButtons[i].addEventListener("click",function(){
+            this.classList.toggle("active");
+        },false)
+    }     
+  </script>
+
+
+--> code for the progress bar and task :-
+========================================
+<!DOCTYPE html>
+<html>
+<style>
+.active{
+	background-color:red;
+}
+
+.bar-contain{
+margin-top:50px;
+	height:20px;
+    width:50%;
+    background-color:#ddd;
+    border-radius:5px;
+    position:relative;
+    border:1px solid red;
+    overflow:hidden;
+}
+.bar-person{
+	position:absolute;
+    width:0%;
+    height:100%;
+    background-color:red;
+}
+span{
+	position:absolute;
+    text-align:center;
+    width:100%;
+    color:#fff;
+    top:0;
+    font-size: 15px;
+    z-index: 9;
+}
+</style>
+<body>
+    <div id="buttonsList">
+	<button class="btn active">button</button>
+	<button class="btn">button</button>
+	<button class="btn">button</button>
+	<button class="btn">button</button>
+   </div>
+
+
+		<div class="bar-contain">
+        <span id="bar-status">0%</span>
+        		<div class="bar-person"></div>
+        </div>
+
+	<script>
+      var progressWidths = document.getElementsByClassName("bar-person");
+        progressWidths[0].style.width = "0%";
+		var buttonsList = document.getElementById("buttonsList");
+
+		var navButtons = buttonsList.getElementsByClassName("btn");
+	    for(var i=0 ; i<navButtons.length ;i++){
+		navButtons[i].addEventListener("click",function(){
+			 var current = document.getElementsByClassName("btn");
+            
+            	for(j = 0; j<current.length;j++){
+      current[j].className =  current[j].className.replace("active", "");      
+                }
+		   
+            if(this.previousElementSibling != null){
+             this.previousElementSibling.classList.add("active");
+		  
+            }
+              this.className+= " active";
+           
+		},false)
+	    }
+
+	var progress = setInterval(function(){
+    	var currentWidth = document.getElementById("bar-status").innerHTML;
+         
+         var progressWidth = document.getElementsByClassName("bar-person");
+         
+       progressWidth[0].style.width =  parseInt(progressWidth[0].style.width) + 10 + '%';
+       
+       document.getElementById("bar-status").innerHTML = parseInt(currentWidth) + 10 + "%";
+       
+        if( document.getElementById("bar-status").innerHTML == "50%"){
+         	console.log("completed");
+            document.getElementsByClassName("bar-person")[0].style.backgroundColor = "blue"; 
+             document.getElementsByClassName("bar-contain")[0].style.borderColor = "blue";          
+         
+         }
+         
+         if( document.getElementById("bar-status").innerHTML == "100%"){
+         	console.log("completed");
+            document.getElementsByClassName("bar-person")[0].style.backgroundColor = "green"; 
+             document.getElementsByClassName("bar-contain")[0].style.borderColor = "green";    
+             clearInterval(progress);
+         }
+        
+    },2000);
+	</script>
+
+</body>
+</html> 
