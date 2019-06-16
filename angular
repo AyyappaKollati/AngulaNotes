@@ -366,46 +366,6 @@ to loop through the
 to include bootstrap in our project we need to include it in the angular.json file in the styles array.
 
 
-Project-
-=========
-shopping List and Recipe book
-
-Debugging:-
-==========
-we can debug our code using the breakpoints, we can have breakpoints in our ts files in the sources section in the developer tools.
-to access the ts files we will open the webpack:// folder then . folder then src folder there we can see our ts files.
-we will have augury chrome extension which will analyze our project structure.
-
-bydefault all properties of components accessiable inside of that component not from outside of that component.
-if we want to use any property of a component from outside we use a decorator as shown below...
-
-@Input() element:string;
- 
-now the variable element is accessiable outside the component, before that we need to import it as shown below..
-	 import { Input } from '@angular/core';
-
-if we want to use element outside the component with another name we can pass the name to @Input as shown below..
-  @Input('srvElement') element:string;
-
-creating own event handlers:-
-
-EventEmitter is an object in angular used to create own events. as shown below..
-
-@output() serverCreated= new EventEmitter<{serverName:string}>();
-now we can raise the event manually as 
-		this.serverCreated.emit({serverName:this.newservername});
-we need to import both EventEmitter and Output from the angular/core. now we can use the event as
-
-		(serverCreated)= "method_name()";
---> if we pass any value to the parent component as an argument from child component, then in the parent component it should take it as 
-  $event.
-  		(serverCreated)= "method_name($event)";
---> we can also pass multiple values on one eventemitter.
-
-
-now we can access the variable element as srvElement outside the component..
-
-
 Encapsulation:-
 ==============
 -->encapsulation means binding the styles to the respective component
