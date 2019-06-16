@@ -1,0 +1,52 @@
+There are 2 CSS preprocessors:-
+  1) Less https://lesscss.org/
+  2) Sass https://sass-lang.com/
+
+Sass has 2 syntaxes available:
+  Sass itself (Syntactically Awesome StyleSheets) in .sass files
+  SCSS (Sassy CSS) in .scss files, which is something halfway between regular CSS and Sass
+  
+Remember that:
+  Sass is the name of the preprocessor
+  SCSS is easier to learn
+  all features are available for both syntaxes
+  everything in SCSS is available in Sass  
+  --> We’re actually going to write SCSS but still call it Sass.
+  We’re gonna use SCSS for a few reasons:
+      readibility: the syntax is very similar to CSS
+      learning curve: it only adds a few additional features on top of CSS
+      compatibility; a CSS file is a valid SCSS file
+      resources: lots of online articles to read and open source libraries to use
+      expandibility: it’s easy to go from SCSS to Sass
+--> sass provides variables, nesting,mixins,extensions, operators.
+
+SASS vs. LESS :-
+================
+--> sass uses $ to declare variable
+--> less uses @ to declare variable
+--> Both preprocessors share some of the same properties: Both SASS and LESS allow for the use of mixins and variables.
+     One difference, though, is that SASS is based on Ruby,while LESS uses JavaScript.
+--> With SASS, users are free to choose between “indented syntax” or SCSS.  LESS doesn’t offer this choice
+
+SASS built-in functions:-
+========================
+-> to convert a color from hexa to rgb we have rgba() function in sass , if we pass hex code and the opacity we want it will convert into 
+    rgb color
+      ex:-  
+          rgba(#333,0.5)
+-> fade-out() this is also same like rgba() function with some opacity           
+        fade-out(#000,0.6)  
+    the difference is that fade-out function will take the 1-specified transparency value    
+    the above fade-out will give the result as 
+            rgba(0,0,0,0.4)
+--> percentage() function is used to caluclate width in percentages
+      width:percentage(50px / 1000px)
+--> other functions like
+      darken(red,20%)
+      lighten(blue,30%)
+--> for a complete list of built-in function below is the official link 
+
+
+        https://sass-lang.com/documentation/Sass/Script/Functions.html
+-->         
+      
