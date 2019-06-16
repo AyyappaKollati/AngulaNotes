@@ -1,0 +1,88 @@
+--> git is an repository
+--> to initialize git we use command git init
+--> git doesn't track all your files, only the files which are in the staging area are considered.
+--> before commit our changes we need to push our files into staging area using git add command.
+--> if we use "git add ." command it will push all the files into staging area
+--> if we don't want to push all the files then we will commit each file by writing the file name instead of .(dot)
+
+--> after adding the files into staging area we will use git commit -m "commit-message-here" command.
+--> it will record the changes of the modified files into the local repository
+--> each commit will have it's own unique id.
+--> it is good practice to always write proper commit message.
+--> commit message is useful to know what changes was made in that commit.
+
+--> to know the current status of the repository we will use "git status" command.
+--> it will return the current branch also.
+--> if there are no files changed, it will show "nothing to commit" message.
+
+--> with git there are many settings are possible.
+--> one important setting is that username and email it will useful to identify who are commiting the changes.
+--> we can set our email,username using git config.
+--> we can set it in two ways, one is for our local repository and one is for the global.
+--> we will username globally using "git config --global user.name "ganesh""
+--> we will email globally using "git config --global user.email "ganesh@gmail.com"
+--> we can also set our username and email to current repository without --global, as shown below
+             "git config user.name "ganesh""
+             "git config user.email "ganesh@gmail.com"
+
+--> "git branch" command will give you the list of branches in the repository.
+--> there are two ways to create branch
+          1) git branch "branch-name"
+          2) git checkout -b "branch-name"
+--> if we use the 1st command we will able to create a branch but we will not go into the branch (we are still in our old branch).
+--> if we use the 2nd command we will able to create a branch and we are now checkout to new branch.
+--> to change your branch we will use "git checkout branch-name"
+
+--> we will create branches for specific functionality.
+--> after completing the functionality we will merge our branche with the master.
+--> after merging the code with the master, there is no need of the merged branch, so we can delete the merged branch using "git branch -d branch-name" command.
+--> to merge the branch code with the master we should first checkout to master.
+--> then we will execute the command as "git merge branch-name"
+
+--> to connect our local repository to github account we run the below command.
+      git remote add origin "ssh of your github account"
+--> to get the copy of remote repository we run the below command.
+      git clone "ssh of your github account"
+
+--> when we are made some changes to files and we we wanted to switch to another branch without commit the changes we will use "git stash -u"
+--> after came back to old branch to get the old changes back we will use "git stash apply"
+--> we can keep our changes in stash
+
+
+--> "git log" command will give you the list of commits in a repository
+--> we can give the parameters to git log as shown below
+--> git log --author="ganesh"
+      above command display list of commits made by the ganesh
+--> git log --before="date-here"
+
+--> we will get the hascode of the last commit by run the "git log --oneline.
+--> to revert your last commit changes we will use "git revert last-commit-hascode"
+
+--> we can check the remote origin for git pushes.
+--> git remote -v
+      # View current remotes
+      origin  https://github.com/OWNER/REPOSITORY.git (fetch)
+      origin  https://github.com/OWNER/REPOSITORY.git (push)
+      destination  https://github.com/FORKER/REPOSITORY.git (fetch)
+      destination  https://github.com/FORKER/REPOSITORY.git (push)
+    git remote rm destination
+      # Remove remote
+    git remote -v
+      # Verify it's gone
+
+--> Add a New Remote to your Git Repo
+        git remote add origin origin-url
+
+--> command to exit from the merge
+git merge --abort
+
+--> to remove the changes from staging area, we use below command
+          git reset HEAD <file-name>
+--> to remove all files the changes from staging area          
+        git reset HEAD .  (or)  git reset
+-->  to remove the files from the tracked files list we use below command
+              git checkout -- <file-name>
+--> to remove all files the changes from  tracked files list
+            git checkout -- .
+
+
