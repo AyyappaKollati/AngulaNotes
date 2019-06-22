@@ -61,19 +61,26 @@ to create a routing file by the angular cli we will use the "ng new project-name
 when we create a project using the command angular will generate a few default files:-
 ====================================================================================
 .editorconfig:-
-	Configuration for code editors.EditorConfig helps maintain consistent coding styles for multiple developers working on the same project across various editors and IDEs. The EditorConfig project consists of a file format for defining coding styles and a collection of text editor plugins that enable editors to read the file format and adhere to defined styles.
+	Configuration for code editors.EditorConfig helps maintain consistent coding styles for multiple developers working on the 
+	same project across various editors and IDEs. The EditorConfig project consists of a file format for defining coding styles and a 
+	collection of text editor plugins that enable editors to read the file format and adhere to defined styles.
 	
 .gitignore:-
 	Specifies intentionally untracked files that Git should ignore.
-	If you create a file in your repository named .gitignore, Git uses it to determine which files and directories to ignore, before you make a commit.
-	A .gitignore file should be committed into your repository, in order to share the ignore rules with any other users that clone the repository.	
+	If you create a file in your repository named .gitignore, Git uses it to determine which files and directories to ignore, 
+	before you make a commit.
+	A .gitignore file should be committed into your repository, in order to share the ignore rules with any other users that
+	clone the repository.	
 	
 angular.json:-
-	it is used by the angular CLI to configure options for build, serve, and test tools that the CLI uses, such as TSLint, Karma, and Protractor. For details, see Angular Workspace Configuration.
+	it is used by the angular CLI to configure options for build, serve, and test tools that the CLI uses, such as TSLint, Karma, 
+	and Protractor. For details, see Angular Workspace Configuration.
 	version: The configuration-file version.
 	newProjectRoot: Path where new projects are created. Absolute or relative to the workspace folder.
-	defaultProject: Default project name to use in commands, where not provided as an argument. When you use ng new to create a new app in a new workspace, that app is the default project for the workspace until you change it here.
-	projects : Contains a subsection for each project (library, app, e2e test app) in the workspace, with the per-project configuration options.
+	defaultProject: Default project name to use in commands, where not provided as an argument. When you use ng new to create a 
+	new app in a new workspace, that app is the default project for the workspace until you change it here.
+	projects : Contains a subsection for each project (library, app, e2e test app) in the workspace, with the per-project 
+	configuration options.
 
 node_modules :-
 	Provides npm packages to the entire workspace.
@@ -88,12 +95,16 @@ tsconfig.json:-
 	Default TypeScript configuration for apps in the workspace, including TypeScript and Angular template compiler options.
 	
 tslint.json:-
-	TSLint is an extensible static analysis tool that checks TypeScript code for readability, maintainability, and functionality errors. It is widely supported across modern editors & build systems and can be customized with your own lint rules, configurations, and formatters.
+	TSLint is an extensible static analysis tool that checks TypeScript code for readability, maintainability, and functionality
+	errors. It is widely supported across modern editors & build systems and can be customized with your own lint rules,
+	configurations, and formatters.
 	
 Environment files:-
 		https://blog.angularindepth.com/becoming-an-angular-environmentalist-45a48f7c20d8
---> An Angular Application Environment is JSON configuration information that tells the build system which files to change when you use ng build and ng serve.
---> By default the Angular CLI creates a src/environments folder with two environment files in it: environment.ts and environment.prod.ts.
+--> An Angular Application Environment is JSON configuration information that tells the build system which files to change when 
+you use ng build and ng serve.
+--> By default the Angular CLI creates a src/environments folder with two environment files in it: environment.ts and 
+environment.prod.ts.
 --> These files are referenced in our angular.json file. Take a look and find the following lines:
 	"configurations": {
 	  "production": {
@@ -114,7 +125,8 @@ Environment files:-
 	    "buildOptimizer": true
 	  }
 	}
---> Notice the fileReplacements array. This tells ng build and ng serve, “If I use the production configuration, replace the contents of the environment.ts file with the contents of the environment.prod.ts file.”
+--> Notice the fileReplacements array. This tells ng build and ng serve, “If I use the production configuration,
+replace the contents of the environment.ts file with the contents of the environment.prod.ts file.”
 --> IMPORTANT: All the data in the environment file will be visible to the client.
     NEVER put any sensitive information like passwords or secret keys in your environment files.
 --> You can also create your own environments. Let’s add a new environment and name it test.
@@ -127,7 +139,8 @@ Environment files:-
 	  production: false,
 	  name: 'test'
 	};
-	We need to tell angular.json about our new environment file. In the build element there is a configurations object. Add a new object for our test configuration so that it looks like this:
+	We need to tell angular.json about our new environment file. In the build element there is a configurations object. 
+	Add a new object for our test configuration so that it looks like this:
 
 	"configurations": {
 	  "production": {
@@ -156,7 +169,8 @@ Environment files:-
 	    ]
 	  }
 	}
-	Now, this modification only affects ng build. We want to also be able to use it with ng serve. So we need to make one more change.
+	Now, this modification only affects ng build. We want to also be able to use it with ng serve. So we need to make one more 
+	change.
 
 	In the serve element add a reference to our test configuration. It should look like this:
 
@@ -187,7 +201,8 @@ bydefault angular creates one directive i.e, <app-root>
 
 the angular run only index.html.
 
-we will set the base href="/" in our index.html file, when we set the base href to / it means that all files are relative to the root module. 
+we will set the base href="/" in our index.html file, when we set the base href to / it means that all files are relative to 
+the root module. 
 
 to open project in the visual studio type the following command in the command prompt from the project folder
 		code .
@@ -198,10 +213,12 @@ angular files executing order:
 first file is main.ts code.
 	here we are calling app.module.ts file.
 second file is app.module.ts.
-     here we have bootstrap array which contains the components that angular should know while it analyzes the index.html file. here we are referencing the 
+     here we have bootstrap array which contains the components that angular should know while it analyzes the index.html file
+     here we are referencing the 
 	AppComponent.
 third file is the app.component.ts.
-  	here we have one selector defined and that we have used in our index.html so that the content in the app.component.html will render in the browser.
+  	here we have one selector defined and that we have used in our index.html so that the content in the app.component.html
+	will render in the browser.
 
  1) main.ts
  2) app.module.ts
@@ -352,13 +369,15 @@ we will write the getColor() method in ts file. the color will change according 
 	in the above directive we have shown that styles are adding dynamically in the same way we can add the classes 
 to the elements dynamically if the condition returns true as shown below...
 <p [ngStyle]="{backgroundColor:getColor()}" [ngClass]="{online: serverStatus==='online'}">server is on</p>
-in the above code the class online will add when the serverStatus returns online. we can add multiple classes dynamically using the ngclass directive.
+in the above code the class online will add when the serverStatus returns online. we can add multiple classes dynamically 
+using the ngclass directive.
 
 *ngFor:-
 ========
  it is also structural directive.
 ex: <p *ngFor="let server of servers"></p>
-in the above code servers is an array the p tag loops through the servers array it creates the number of p elements based on the number of elements in the servers
+in the above code servers is an array the p tag loops through the servers array it creates the number of p elements based on 
+the number of elements in the servers
  array.
 to loop through the
 
@@ -395,7 +414,8 @@ Native:-
 
 each component in angular will have it's own css file, when we define styles in that (CSS) file it will apply to that component only.
 this is called view encapsulation behaviour in angular.
-for every style it will add one attribute that is same as component attribute, each component will have it's own attribute (ex _ngcontent-ejo-0)
+for every style it will add one attribute that is same as component attribute, each component will have it's own attribute
+(ex _ngcontent-ejo-0)
 if we don't want to apply the style only for that component we can override the default behaviour as shown below...
 
 @Component({
@@ -487,7 +507,8 @@ we need to implement the life cycle mehods which we are using. as shown below..
 ngOnChanges is useful when we want to react for particular change in the DOM (like button click, hover...etc.).
 ngDoCheck is useful when we want to react for any change in the DOM (like button click, hover...etc.). it will run for every change.
 
-we can't access the DOM elements in ngOnInit hook bcz the when the time it is calling the DOM is not loaded yet., we can use the ngAfterViewInit hook to change the 
+we can't access the DOM elements in ngOnInit hook bcz the when the time it is calling the DOM is not loaded yet., 
+we can use the ngAfterViewInit hook to change the 
 DOM elements.
 
 
@@ -551,14 +572,16 @@ every ts file in the component should have the below 3 things.,
 	3) decorator (to add meta data)
 if any ts file having the above 3 then we can say that it is an component.
 we need to import the component from the @angular/core;
-we can have the our html content in ts file using double ticks or single quotes or double quotes, if our content is morethan three line then we will use seperate html file. if it is one line we can write in the ts file itself.
+we can have the our html content in ts file using double ticks or single quotes or double quotes, if our content is morethan three 
+line then we will use seperate html file. if it is one line we can write in the ts file itself.
 when we use inline template in ts file we will loose the intellisence.
 
 we need to import components in app.modue.ts which we are created.
 we also need to include our component in declartions part
 appmodule is the root module that bootstraps and launches the angular application.
 in appmodule.ts file we have ngmodule and browsermodule imported.
-browsermodule is required for the all angular application which run in web browser also this module includes the ngIf and ngFor directives.
+browsermodule is required for the all angular application which run in web browser also this module includes the ngIf and ngFor
+directives.
 ngmodule is required to add meta data to angular module.
 the component decorator add meta data to the angular component, in the similar way ngmodule adds the meta data to the angualr module.
 we need to register our component in appmodule.ts file in the declarations part.
@@ -574,7 +597,8 @@ in angular interpolation is nothing but databinding. we can use interpolation us
 both interpolation and property binding are one way data binding using these two we can pass the data from ts file to template.
 --> to concatinate strings we must use interpolation.
 --> to set an property to an element we must use property binding.
-    when we are using property binding we should enclose the property name with a pair of square brackets.or else we can use canonical form (bind- property name)
+    when we are using property binding we should enclose the property name with a pair of square brackets.or else we can use
+    canonical form (bind- property name)
 --> interpolation and property binding is used only on the html element properties not on attributes.
 --> if we want to change attribute values dynamically we will use attribute binding.
 --> we can use it same way as interpolation but need to add a attr to the attribute as shown below..
@@ -645,7 +669,8 @@ both interpolation and property binding are one way data binding using these two
 	the two way databinding is the combination of both event binding and property binding.
 --> we can check the array exist or not using length property as shown below..
 			arr.length
---> ngFor is used to iterate over list of items, but if the list have more number of elements in the array ngFor performance is not good.
+--> ngFor is used to iterate over list of items, but if the list have more number of elements in the array ngFor performance 
+is not good.
 --> when we have large lists we will use the trackBy with the ngFor to improve the performance.
 --> pipes in angular.
     ================
@@ -674,7 +699,8 @@ sending data from parent to child component:-
 --> to send the data from parent component to child component we decorate variables with @input in child component.
 --> then we send the values to child component variables as shown below..
 	<app-testing [childvariable]="caption"></app-testing>
-   in the above example childvariable is a variable in child component decorated with @input and the caption is a variable in the parent    component with value..now the value in the caption variable will apply to the childvariable.
+   in the above example childvariable is a variable in child component decorated with @input and the caption is a variable
+   in the parent    component with value..now the value in the caption variable will apply to the childvariable.
    
 sending data from child to parent component:-
 ============================================
@@ -702,14 +728,16 @@ ng-container directive:-
   
   Interfaces in angular:-
   ====================
---> interface is a collection of abstract methods, the class which is implementing the interface that class must provide implementation for the abstract methods in the interface and must have the interface properties(variables) declaration.
+--> interface is a collection of abstract methods, the class which is implementing the interface that class must provide 
+	implementation for the abstract methods in the interface and must have the interface properties(variables) declaration.
 --> we can create the interface using interface keyword as shown below..
 	export interface interface_name{
 	code:string;
 	data?:string;
 	custom_method(name:string):string;
 	}
---> above interface have one method and one vairable declaration, the class which implements this interface should provide the implementation for the method and should have the variable (code).
+--> above interface have one method and one vairable declaration, the class which implements this interface should provide
+	the implementation for the method and should have the variable (code).
 --> in the second variable data we have symbol (?), it is to declare that this variable is not mandatory to be in the implemented class.
 --> by default all the variables in interface are public, if we specify access modifier we will get CE.
 --> during transpilation in js no code is generated for the interfaces, it is only used by typescript for the type checking.
@@ -726,7 +754,9 @@ Services in angular:-
 --> services in angular is used when we need to reuse the data or logic across multiple components.
 --> by using this no need to rewrite the same code multiple times, we can reuse the service.
 --> if we don't use services we need to repeat our code at each component.
---> creating service is same like creating component, in component we use @Component() to decorate the class. in service we use Injectable() decorator to make class as service, and also we need to declare the service in the providers seciton in the component.
+--> creating service is same like creating component, in component we use @Component() to decorate the class.
+in service we use Injectable() decorator to make class as service, and also we need to declare the service in the
+providers seciton in the component.
 
 --> we need to import Injectable() from @angular/core.
 	import { Injectable } from @angular/core;
@@ -770,7 +800,8 @@ Dependency Injection in angular:-
 --> Advantages of DI:-
 ======================
 --> create applications that are easy to write and maintain over time as the application evolves.
---> easy to share data and functionality as the angular injector provides a singleton. i.e, single instance of the service. then it will share the single instance across all the application.
+--> easy to share data and functionality as the angular injector provides a singleton. i.e, single instance of the service. 
+then it will share the single instance across all the application.
 	we can have the get and set methods for the service instances to share the data across the application.
 --> easy to write and maintain unit tests.
 
@@ -933,7 +964,8 @@ Calling web API service from angular application:-
 
 Error handling while calling api:-
 ================================
---> there will be different type of errors will occur while trying to call the api, we need to handle the errors to show the error msg to the users.
+--> there will be different type of errors will occur while trying to call the api, we need to handle the errors to show the error 
+msg to the users.
 --> we will use the catch operator to catch the errors, first we need to import the catch as shown in below..
 	import 'rxjs/add/operator/catch';
 --> we will write the catch method after map, as shown in below
@@ -1055,14 +1087,16 @@ retrying the application to service:-
 			});	
 		    }    
 	--> in the above code if any error occurs the retry method will try only 3 times to reconnect to service.
-	--> the problem with the retry method is it will tries to connect server immediately without any delay.to have some dealy to retry we use the retryWhen method.
+	--> the problem with the retry method is it will tries to connect server immediately without any delay.to have some dealy 
+	to retry we use the retryWhen method.
 	
    retryWhen:-
   ----------
   --> for us to be able to use the retryWhen method we need to import the retryWhen, delay from rxjs.
   	import 'rxjs/add/operator/retryWhen';
   	import 'rxjs/add/operator/delay';
-  --> now we will replace the retry with retryWhen, but the retryWhen method takes one function as a parameter. in that function we will 	specify the delay in milliseconds.
+  --> now we will replace the retry with retryWhen, but the retryWhen method takes one function as a parameter. in that function we 
+  will 	specify the delay in milliseconds.
   				ngOnInit(){
 					this._employeeService.getEmployees()
 					.retryWhen((err)=>err.delay(1000))
@@ -1100,7 +1134,8 @@ retrying the application to service:-
 				    } 
 	
 --> in the above code for the scan method second parameter is the seed that is 0, it tells to us from where we want to start the count.
---> in the above example the subscriber will try to connect to the service 5 times and if the service is not available after 5th time also it throws error.
+--> in the above example the subscriber will try to connect to the service 5 times and if the service is not available after 5th time
+	also it throws error.
 
 unsubscribe() in Observable:-
 ============================
@@ -1134,7 +1169,8 @@ unsubscribe() in Observable:-
 			this.subscription.unsubscribe();
 		}
 --> the Isubscribe interface also have the close variable which tells us that there is an open connection or not.
---> we will use the *ngIf structural directive on the button to show only when we have the open connection with service, if we don't have the open connection then the button should not display.
+--> we will use the *ngIf structural directive on the button to show only when we have the open connection with service,
+if we don't have the open connection then the button should not display.
 			<button (click)="cancelbtn()" *ngIf="!subscription.close">cancel</button>
 --> now the above button will display only when there is an open connection.
 			
@@ -1159,10 +1195,12 @@ angular forms:-
 		1)Template driven forms
 		2) Model Driven Forms (Reactive Forms).
 --> template driven forms are used to create simple forms 
---> model driven forms are used to create complex forms. i.e, if we want to add form controls dynamically and to perform validation we use Reactive forms
+--> model driven forms are used to create complex forms. i.e, if we want to add form controls dynamically and to perform validation 
+we use Reactive forms
 
 --> whenever the angular sees the form tag the angular automatically attaches the ngForm attribute to the form
---> ngForm adds several options to the form, it keep tracks all the form controls in the form and monitor their properties like value,valid, touched etc..
+--> ngForm adds several options to the form, it keep tracks all the form controls in the form and monitor their properties like value,
+valid, touched etc..
 --> we will create one reference variable for the form with the type of ngForm.
 --> we need to import the fromsmodule from the forms in our root component, specify in the imports section.
 --> inorder to track our form controls by angular we should use ngmodel directive on all those form controls.
@@ -1188,8 +1226,10 @@ angular forms:-
 --> if we want to make it checked default we will create the variable in ts file with the label name and assign a default value to it.
 		gender = 'male';
 --> in the above code male gender checkbox will be checked bydefault.
---> we can also use disabled attribute on checkbox to make it disabled but bydefault disabled form controls are not included in the angular auto generated form model.
---> bydefault we can select an option from the seletct box, but the selected attribute won't work bcz we are using the ngModel on select box, so that we will provide the default value in the ts file as shown below.
+--> we can also use disabled attribute on checkbox to make it disabled but bydefault disabled form controls are not included in the 
+angular auto generated form model.
+--> bydefault we can select an option from the seletct box, but the selected attribute won't work bcz we are using the ngModel on 
+select box, so that we will provide the default value in the ts file as shown below.
 			department='3';
 --> in the above example the selectbox with the name and ngModel set to department we are selecting the option that value is equal to 3.
 --> we can disable the selectbox using disabled attribute in the selectbox.
@@ -1212,7 +1252,8 @@ angular forms:-
 	datePickerconfig: partial<BsDatepickerConfig>;
 We can change the default colour-scheme, by manipulating containerClass property in bsConfig object.
 
-Showing or hiding week numbers : By default, the weeknumber are displayed. If you want to hide them, all you have to do is set "showWeekNumbers" boolean property to false in the config object.
+Showing or hiding week numbers : By default, the weeknumber are displayed. If you want to hide them, all you have 
+to do is set "showWeekNumbers" boolean property to false in the config object.
 
 constructor() {
   this.datePickerConfig = Object.assign({},
@@ -1225,7 +1266,8 @@ constructor() {
 You can find all the properties of the config object at the following page. 
 https://github.com/valor-software/ngx...
 
-Along the same lines we can also set the min and max dates. Please note that the month numbers start from 0 and not 1. So for January it is 0, February it is 1, so on and so forth.
+Along the same lines we can also set the min and max dates. Please note that the month numbers start from 0 and not 1. So for 
+January it is 0, February it is 1, so on and so forth.
 constructor() {
   this.datePickerConfig = Object.assign({},
     {
@@ -1249,17 +1291,22 @@ constructor() {
     });
 }
 
-To set a default date, create a property (dateOfBirth) in the component class and set it to the default value you want. Since we are using 2 way databinding, the defualt date is displayed in the corresponding input field when them form loads. In this case we have set default date to January 30, 2018.
+To set a default date, create a property (dateOfBirth) in the component class and set it to the default value you want. 
+Since we are using 2 way databinding, the defualt date is displayed in the corresponding input field when them form loads. 
+In this case we have set default date to January 30, 2018.
 dateOfBirth: Date = new Date(2018, 0, 30);
 
-At the moment, the "Date of Birth" input element is spanning across the entire width of the form. There are sevral options to limit it's width. One option is to use the Bootstrap row and grid classes (Example: col-md-4, col-md-5, etc...)
+At the moment, the "Date of Birth" input element is spanning across the entire width of the form. There are sevral options
+to limit it's width. One option is to use the Bootstrap row and grid classes (Example: col-md-4, col-md-5, etc...)
 
-To control the placement of the Datepicker use the placement property. The allowed values are "top" | "bottom" | "left" | "right". The default is "bottom".
+To control the placement of the Datepicker use the placement property. The allowed values are "top" | "bottom" | "left" | "right". 
+The default is "bottom".
 
 --> from angular 4,  angular disabled browser default validation, bcz of the inconsistency of the error messages in different browsers.
 --> it will disable this by adding novalidate attribute to the form tag.
 --> we can explicitly enable the browser default validation functionality by adding the ngNativeValidate attribute to the form tag.
---> if we use angular 2, to disable browser default validation, then we need to explicitly specify the novalidate attribute for the form attribute.  
+--> if we use angular 2, to disable browser default validation, then we need to explicitly specify the novalidate attribute for 
+the form attribute.  
 
 Form Validation in angular:-
 ============================
@@ -1281,7 +1328,8 @@ Form Validation in angular:-
       when form loades the pristence property will be true and dirty property will be false, because we haven't entered any value in 	   the form fields, when we focus and enter any value in the field in that form those values will change.
 --> valid & invalid:-
     ================
-     if we use any required attribute on any fields in our form, then the valid property will be false untill we enter value into that 	   fields, after enetering the values into the all required fields then the valid property becomes true.
+     if we use any required attribute on any fields in our form, then the valid property will be false untill we enter value into 
+     that 	   fields, after enetering the values into the all required fields then the valid property becomes true.
 
 --> we can see all the properties of the form or a field using it's local template reference as shown below..
 	ex:-   <form #employeeform="NgForm">  ---- </form>
@@ -1304,7 +1352,8 @@ Select Box validation:-
    option set to empty("").
    
 --> but in some cases we have the first value is not an empty value, in that case we will use custom validation.   
-	<select (blur)="validateSelect(select.value)" (change)="validateSelect(select.value)" [class.is-invalid]="select.invalid && select.touched" required #select="ngModel" [(ngModel)]="isValid">
+	<select (blur)="validateSelect(select.value)" (change)="validateSelect(select.value)" 
+	[class.is-invalid]="select.invalid && select.touched" required #select="ngModel" [(ngModel)]="isValid">
 	   <option value="default">select here..</option>
 	   <option value="2">option2</option>
 	</select>
@@ -1398,7 +1447,8 @@ Using Multilanguage from ngx-translate:-
 --> I added the http-loader just because I've created some json files containing the translations which I want to fetch. This simulates some real time translation such as using a RESTful translation service.
 --> we are going to use translateModule.
 --> Let's open up our app.module.ts and import the TranslateModule.
---> This module requires a loader which is the TranslationHttpLoader we added earlier. But before doing so we need a way to create it since it has a dependency on HttpClient.
+--> This module requires a loader which is the TranslationHttpLoader we added earlier. But before doing so we need a way to create
+	it since it has a dependency on HttpClient.
 --> 		import { HttpClientModule, HttpClient } from '@angular/common/http';
 		import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 		import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -1425,7 +1475,8 @@ Using Multilanguage from ngx-translate:-
 		  bootstrap: [AppComponent]
 		})
 --> Now The loader can load the translation files using http.
---> we need the TranslateService to be able to make our template multi-lingual. Also we need to add our translation files for different 	languages we want to use.
+--> we need the TranslateService to be able to make our template multi-lingual. Also we need to add our translation files for different
+languages we want to use.
 	First let's import the service. Open your app.component.ts and insert this line on top:
 		import { TranslateService } from '@ngx-translate/core';
 --> Now we need to define our default language, which we will do inside the constructor:
@@ -1444,7 +1495,8 @@ Using Multilanguage from ngx-translate:-
 	    "WelcomeMessage": "Bienvenido a la aplicación de demostración internacional"
 	}
 
---> These files will be loaded using our translation loader that we added to the translation module. Now we can go ahead and create our template.
+--> These files will be loaded using our translation loader that we added to the translation module. Now we can go ahead and create
+our template.
 		  <h5>{{ 'hi' | translate}}</h5>
 		  <button (click)="switchLanguage('en')">{{ 'English' | translate }}</button>
 		  <button (click)="switchLanguage('es')">{{ 'Spanish' | translate }}</button>
@@ -1491,7 +1543,8 @@ Observables:-
 	"Error" notification: sends a JavaScript Error or exception.
 	"Complete" notification: does not send a value.
 	
---> Next notifications are the most important and most common type: they represent actual data being delivered to an Observer. 	Error and Complete notifications may happen only once during the Observable Execution, and there can only be either one of them.
+--> Next notifications are the most important and most common type: they represent actual data being delivered to an Observer. 
+Error and Complete notifications may happen only once during the Observable Execution, and there can only be either one of them.
 
 --> It is a good idea to wrap any code in subscribe with try/catch block that will deliver an Error notification if it catches an exception:
 	const observable = Observable.create(function subscribe(observer) {
@@ -1504,7 +1557,8 @@ Observables:-
 	    observer.error(err); // delivers an error if it caught one
 	  }
 	});
---> The Subscription represents the ongoing execution, and has a minimal API which allows you to cancel that execution. Read more about the Subscription type here. With subscription.unsubscribe() you can cancel the ongoing execution:
+--> The Subscription represents the ongoing execution, and has a minimal API which allows you to cancel that execution. 
+Read more about the Subscription type here. With subscription.unsubscribe() you can cancel the ongoing execution:
 	const observable = Observable.from([10, 20, 30]);
 	const subscription = observable.subscribe(x => console.log(x));
 	// Later:
@@ -1533,15 +1587,21 @@ Observables:-
  RXJS :-
 =========
 --> RxJS is one of the implementation in javascript of ReactiveX API
---> RxJS is a library for composing asynchronous and event-based programs by using observable sequences. It provides one core type, the Observable, satellite types (Observer, Schedulers, Subjects) and operators inspired by Array#extras (map, filter, reduce, every, etc) to allow handling asynchronous events as collections.
+--> RxJS is a library for composing asynchronous and event-based programs by using observable sequences. It provides one core type, 
+the Observable, satellite types (Observer, Schedulers, Subjects) and operators inspired by Array#extras (map, filter, reduce, every, 
+etc) to allow handling asynchronous events as collections.
 
   Observable Using From :-
 ==============================
---> Observable represents the idea of an invokable collection of future values or events such as a HTTP call or a button click in the UI.Let's create a simple Observable first using from() which also accepts a list.
+--> Observable represents the idea of an invokable collection of future values or events such as a HTTP call or a button click in 
+the UI.Let's create a simple Observable first using from() which also accepts a list.
 	import {Observable} from "rxjs";
 	 let names = ['Ram', 'Tom', 'Hary'];
 	 let  source = Observable.from(names);
---> This creates an Observable and now we want some observer to subscribe to this Observable. Observer is a collection of callbacks that knows how to listen to values delivered by the Observable.To create an Observer, we require 3 methods - one that will be invoked whenever there is a change in the value in Observable - next(), another when an error occurs - error()and third method will be invoked when the datasource is exhausted - complete(). 
+--> This creates an Observable and now we want some observer to subscribe to this Observable. Observer is a collection of callbacks
+that knows how to listen to values delivered by the Observable.To create an Observer, we require 3 methods - one that will be invoked 
+whenever there is a change in the value in Observable - next(), another when an error occurs - error()and third method will be invoked
+when the datasource is exhausted - complete(). 
 --> Now we need to subscribe to the observable 
 	 this.source.subscribe(
       value => console.log(value),
@@ -1558,11 +1618,14 @@ source = Observable.create(observer => {
     observer.next('Hary')
 	observer.complete()
   });
---> This also produces the same result.This is a typical example of event based programming. As soon any event happens in the observable, the same will be published to the subscriber and the subscriber that is listening to that Observable will perform the action based on the event.
+--> This also produces the same result.This is a typical example of event based programming. As soon any event happens in the 
+observable, the same will be published to the subscriber and the subscriber that is listening to that Observable will perform the 
+action based on the event.
 
   Observable from Click Events :-
 ===================================
---> This is a very obvious use case where we want to raise a click event from the DOM.Let's create an Observable from click event using fromEvent() and print the event in the console.
+--> This is a very obvious use case where we want to raise a click event from the DOM.Let's create an Observable from click event using
+fromEvent() and print the event in the console.
 
   let source = Observable.fromEvent(document, 'click');
     source.subscribe(data =>{
@@ -1571,7 +1634,8 @@ source = Observable.create(observer => {
     
   RxJS Operators    
 ==================
---> map() allows to perform some operations on the value before emitting to the observer. For example, we can multiply each value with any digit and then emit it to the subscriber.This use case is helpful when we want to modify the API response before processing.
+--> map() allows to perform some operations on the value before emitting to the observer. For example, we can multiply each value 
+with any digit and then emit it to the subscriber.This use case is helpful when we want to modify the API response before processing.
 let numbers = [3,9,7];
     let source = Observable.from(numbers).map(value => {
       return 2*value;
@@ -1580,7 +1644,8 @@ let numbers = [3,9,7];
       console.log(value);
     })
     
---> filter() filters out the data that meets given criteria. For example, the following Observable will only emit string that starts with 'H'.
+--> filter() filters out the data that meets given criteria. For example, the following Observable will only emit string that 
+starts with 'H'.
  names = ['Ram', 'Tom', 'Hary', 'Hem'];
  Observable.from(this.names).filter(name => name.startsWith('H'))
       .subscribe(name => {
@@ -1592,7 +1657,8 @@ let numbers = [3,9,7];
       .subscribe(name => {
         console.log(name)
       })
---> retry() operator retrun the Observable as many times we want.For example, when any events fail, we can use retry to re-run it.Following code wil run for 3 times.
+--> retry() operator retrun the Observable as many times we want.For example, when any events fail, we can use retry to re-run it.
+Following code wil run for 3 times.
 
  source = Observable.create(observer => {
     observer.next('Ram')
@@ -1607,11 +1673,14 @@ let numbers = [3,9,7];
 
 routereusestrategy :-
 =====================
---> Everytime we navigate between components Angular destroys the previous component and creates the new one. In many situations we might not want this, instead we want the same component to load by adding params to the url
+--> Everytime we navigate between components Angular destroys the previous component and creates the new one. In many situations
+we might not want this, instead we want the same component to load by adding params to the url
 --> but the angular default behaviour is like the url will get updated with the params, but the UI will not get updated.
 --> this is because of the routereusestrategy
 --> RouteReuseStrategy interface defines 5 methods , one of the important one is shouldReuseRoute 
---> shouldReuseRoute This method is called everytime we navigate between routes. The future is the route we are leaving (not sure why is called future) and curr is the route we are landing. If it returns TRUE the routing will not happen (which means that routing has not changed). If it returns FALSE then the routing happens and the rest of the methods are called.
+--> shouldReuseRoute This method is called everytime we navigate between routes. The future is the route we are leaving (not sure why 
+is called future) and curr is the route we are landing. If it returns TRUE the routing will not happen (which means that routing has 
+not changed). If it returns FALSE then the routing happens and the rest of the methods are called.
 --> if both (future and curr) routes are same , then the url get's updated but routing wil not happen, to overcome this problem we 
    override the default behaviour
    	this._router.routeReuseStrategy.shouldReuseRoute = function() {
@@ -1625,7 +1694,8 @@ Custom Directive :-
 --> we can create custom directives. 
 	ng g directive nameofthedirective
 	e.g:- ng g d changeText
---> after executing the above command.. change-text.directive.spec.ts and change-text.directive.ts get created and the app.module.ts file is updated.
+--> after executing the above command.. change-text.directive.spec.ts and change-text.directive.ts get created and the app.module.ts 
+file is updated.
 --> change-text.directive file looks like below
 	import { Directive } from '@angular/core';
 	@Directive({
@@ -1651,7 +1721,8 @@ Custom Directive :-
 	   }
 	}
 
---> In the above file, there is a class called ChangeTextDirective and a constructor, which takes the element of type ElementRef, which is mandatory. The element has all the details to which the Change Text directive is applied.
+--> In the above file, there is a class called ChangeTextDirective and a constructor, which takes the element of type ElementRef, 
+which is mandatory. The element has all the details to which the Change Text directive is applied.
 --> we can also use @input decorator on directive to recieve the value.
 --> we can send the values (or) we can add attributes to the host using @HostBinding...  as shown below
 	html file :- <img appCustomdecorator  class="w-50"/>
@@ -1682,36 +1753,51 @@ Custom Directive :-
 
 @HostBinding() Decorator in custom directive :-
 --> the @HostBinding() function decorator allows you to set the properties of the host element from the directive class.
---> Let's say you want to change the style properties such as height, width, color, margin, border, etc., or any other internal properties of the host element in the directive class. Here, you'd need to use the @HostBinding() decorator function to access these properties on the host element and assign a value to it in directive class.
---> The @HostBinding() decorator takes one parameter, the name of the host element property which value we want to assign in the directive.
+--> Let's say you want to change the style properties such as height, width, color, margin, border, etc., or any other internal 
+properties of the host element in the directive class. Here, you'd need to use the @HostBinding() decorator function to access these 
+properties on the host element and assign a value to it in directive class.
+--> The @HostBinding() decorator takes one parameter, the name of the host element property which value we want to assign in the 
+directive.
 --> If you want to set border properties of the host element, you can do that using @HostBinding() decorator as shown below:
 	@HostBinding('style.border') border: string;
 	@HostListener('mouseover') onMouseOver() {
 	    this.border = '5px solid green';
 	}
---> Using above code, on a mouse hover, the host element border will be set to a green, solid 5-pixel width. Therefore, using the @HostBinding decorator, you can set the properties of the host element in the directive class.
+--> Using above code, on a mouse hover, the host element border will be set to a green, solid 5-pixel width. Therefore, using the 
+@HostBinding decorator, you can set the properties of the host element in the directive class.
 
 Polyfills in angular :-
 ========================
---> Polyfills in basic language are extra lines of code which make your application compatible for different browsers. The code we write is mostly in ES6(New Features: Overview and Comparison) and is not compatible with IE or firefox and needs some environment setups before being able to be viewed or used in these browsers. So, the polyfills takes uo the task to do these low level setups for you.
+--> Polyfills in basic language are extra lines of code which make your application compatible for different browsers. The code we 
+write is mostly in ES6(New Features: Overview and Comparison) and is not compatible with IE or firefox and needs some environment 
+setups before being able to be viewed or used in these browsers. So, the polyfills takes uo the task to do these low level setups 
+for you.
 
---> Polyfills.ts was provided by angular to help you do away with need to specifically setup everything. If you read the comments, you will find that each polyfill has certain browser associated. You just need to uncomment the line, do an npm install if required and save the file. Explore the file and you will get the necessary information.
+--> Polyfills.ts was provided by angular to help you do away with need to specifically setup everything. If you read the comments, 
+you will find that each polyfill has certain browser associated. You just need to uncomment the line, do an npm install if required 
+and save the file. Explore the file and you will get the necessary information.
 
 what is directive :-
 ====================
---> A directive allows you to attach a behavior to DOM elements. This behavior could be as simple or as complex as you'd like. *ngFor and *ngIf are examples of built-in directives in Angular
+--> A directive allows you to attach a behavior to DOM elements. This behavior could be as simple or as complex as you'd like. *ngFor
+and *ngIf are examples of built-in directives in Angular
 
 What is difference between component and directive in angular?
 ==============================================================
---> A component is not the only UI building block in Angular 2. There are also directives which allow you to attach behavior to elements in the DOM. The difference between a component and a directive in Angular 2 is that a component is a directive with a view whereas a directive is a decorator with no view.
+--> A component is not the only UI building block in Angular 2. There are also directives which allow you to attach behavior to elements
+in the DOM. The difference between a component and a directive in Angular 2 is that a component is a directive with a view whereas a 
+directive is a decorator with no view.
 
 ways to subscribe to observables :-
 ====================================
 --> we can subscribe to observables using 2 ways , first way using async pipe,second way is doing manually using subscribe method
 using async pipe :-
 =================
---> We subscribe to an observable in our template using the async pipe. The benefit of this is that Angular deals with your subscription during the lifecycle of a component. Angular will automatically subscribe and unsubscribe for you. Don’t forget to import the “CommonModule” into your module, as the async pipe will be exposed from that.
---> Please note the dollar sign. Using the dollar sign in the name of a variable that is an observable, is considered best practice. This way it’s easy to identify if your variable is an observable or not.
+--> We subscribe to an observable in our template using the async pipe. The benefit of this is that Angular deals with your subscription
+during the lifecycle of a component. Angular will automatically subscribe and unsubscribe for you. Don’t forget to import the 
+“CommonModule” into your module, as the async pipe will be exposed from that.
+--> Please note the dollar sign. Using the dollar sign in the name of a variable that is an observable, is considered best practice. 
+This way it’s easy to identify if your variable is an observable or not.
 
 ex:- 
 	// do a call to fetch the users on init of component
@@ -1730,7 +1816,8 @@ ex:-
 
 Manual Method :-
 ===============
---> We subscribe to the observable ourselves using the actual subscribe() method. This can be handy if you would first like to do something with the data before displaying it. The downside is that you have to manage the subscription yourself.
+--> We subscribe to the observable ourselves using the actual subscribe() method. This can be handy if you would first like to do 
+something with the data before displaying it. The downside is that you have to manage the subscription yourself.
 
 ex:-
 	  public ngOnInit() {
@@ -1755,10 +1842,13 @@ ex:-
 
 Subjects in rxjs :-
 ====================
---> A Subject is like an Observable. It can be subscribed to, just like you normally would with Observables. It also has methods like next(), error() and complete() just like the observer you normally pass to your Observable creation function.
+--> A Subject is like an Observable. It can be subscribed to, just like you normally would with Observables. It also has methods 
+like next(), error() and complete() just like the observer you normally pass to your Observable creation function.
 --> in normal observable we use subscribe method to subscribe the observable.. without subscribing it will not do anything.. also 
-  if we subscribe the same observables from 5 different components instead of sharing the value.. it will call the subscribe method each time(total 5 times).. there is a chance of data change between these 5 components.. to avoid this we use subject...
---> The main reason to use Subjects is to multicast. An Observable by default is unicast. Unicasting means that each subscribed observer owns an independent execution of the Observable. To demonstrate this:
+  if we subscribe the same observables from 5 different components instead of sharing the value.. it will call the subscribe method 
+  each time(total 5 times).. there is a chance of data change between these 5 components.. to avoid this we use subject...
+--> The main reason to use Subjects is to multicast. An Observable by default is unicast. Unicasting means that each subscribed 
+observer owns an independent execution of the Observable. To demonstrate this:
   Ex:-
  =====
 	const observable = Rx.Observable.create((observer) => {
@@ -1774,12 +1864,16 @@ Subjects in rxjs :-
 	observable.subscribe((data) => {
 	   console.log(data); // 0.004617340049055896 (random number)
 	});
---> While Observables are unicast by design, this can be pretty annoying if you expect that each subscriber receives the same values. Subjects can help us overcome this issue. As mentioned before, Subjects can multicast. Multicasting basically means that one Observable execution is shared among multiple subscribers.
+--> While Observables are unicast by design, this can be pretty annoying if you expect that each subscriber receives the same values. 
+Subjects can help us overcome this issue. As mentioned before, Subjects can multicast. Multicasting basically means that one Observable
+execution is shared among multiple subscribers.
 
---> Subjects are like EventEmitters, they maintain a registry of many listeners. When calling subscribe on a Subject it does not invoke a new execution that delivers data. It simply registers the given Observer in a list of Observers.
+--> Subjects are like EventEmitters, they maintain a registry of many listeners. When calling subscribe on a Subject it does not invoke
+a new execution that delivers data. It simply registers the given Observer in a list of Observers.
 
 how to use Subjects to multicast :-
---> Multicasting is a characteristic of a Subject. You don’t have to do anything special to achieve this behaviour. This is a small multicast demonstration:
+--> Multicasting is a characteristic of a Subject. You don’t have to do anything special to achieve this behaviour. This is a small 
+multicast demonstration:
  ex:-
 ====
 	const subject = new Rx.Subject();
@@ -1799,9 +1893,13 @@ how to use Subjects to multicast :-
 
 BehaviorSubject in observable:-
 ===============================
---> while using observable it will share the data to all it's subscribers but to update the value in UI.. we need to refresh the page, but we can achieve this using behaviorSubject with out refreshing the page.
---> One of the variants of the Subject is the BehaviorSubject. The BehaviorSubject has the characteristic that it stores the “current” value. This means that you can always directly get the last emitted value from the BehaviorSubject.
---> There are two ways to get this last emited value. You can either get the value by accessing the .value property on the BehaviorSubject or you can subscribe to it. If you subscribe to it, the BehaviorSubject will directly emit the current value to the subscriber. Even if the subscriber subscribes much later than the value was stored. See the example below:
+--> while using observable it will share the data to all it's subscribers but to update the value in UI.. we need to refresh the page,
+but we can achieve this using behaviorSubject with out refreshing the page.
+--> One of the variants of the Subject is the BehaviorSubject. The BehaviorSubject has the characteristic that it stores the “current”
+value. This means that you can always directly get the last emitted value from the BehaviorSubject.
+--> There are two ways to get this last emited value. You can either get the value by accessing the .value property on the 
+BehaviorSubject or you can subscribe to it. If you subscribe to it, the BehaviorSubject will directly emit the current value to 
+the subscriber. Even if the subscriber subscribes much later than the value was stored. See the example below:
  ex:-
 =====
 	const subject = new Rx.BehaviorSubject();
@@ -1832,12 +1930,16 @@ BehaviorSubject in observable:-
 	// 0.1901322109907977
 --> There are a few things happening here:
 
-	We first create a subject and subscribe to that with Subscriber A. The Subject then emits it’s value and Subscriber A will log the random number.
+	We first create a subject and subscribe to that with Subscriber A. The Subject then emits it’s value and Subscriber A will log
+	the random number.
 	The subject emits it’s next value. Subscriber A will log this again
-	Subscriber B starts with subscribing to the subject. Since the subject is a BehaviorSubject the new subscriber will automatically receive the last stored value and log this.
+	Subscriber B starts with subscribing to the subject. Since the subject is a BehaviorSubject the new subscriber will 
+	automatically receive the last stored value and log this.
 	The subject emits a new value again. Now both subscribers will receive the values and log them.
-	Last we log the current Subjects value by simply accessing the .value property. This is quite nice as it’s synchronous. You don’t have to call subscribe to get the value.
---> we  can create BehaviorSubjects with a start value. When creating Observables this can be quite hard. With BehaviorSubjects this is as easy as passing along an initial value. See the example below:-
+	Last we log the current Subjects value by simply accessing the .value property. This is quite nice as it’s synchronous. 
+	You don’t have to call subscribe to get the value.
+--> we  can create BehaviorSubjects with a start value. When creating Observables this can be quite hard. With BehaviorSubjects 
+this is as easy as passing along an initial value. See the example below:-
  ex:-
 =====
 	const subject = new Rx.BehaviorSubject(Math.random());
@@ -1854,7 +1956,9 @@ BehaviorSubject in observable:-
 	
 What Is Memory Leak In Angular?
 ================================
-Every time you create a subscription to an observable, you’re creating a reference to that observable in memory, If you’re not being careful and unsubscribe then the reference will live in the memory even if the component you created for the observable has been destroyed. This is called as a memory leak which can cause a serious problem depends on the size of your application.	
+Every time you create a subscription to an observable, you’re creating a reference to that observable in memory, If you’re not being
+careful and unsubscribe then the reference will live in the memory even if the component you created for the observable has been 
+destroyed. This is called as a memory leak which can cause a serious problem depends on the size of your application.	
 we can unsubscribe to the observables using following ways:-
 1) Unsubscribe From Observables using unsubscribe() method in ngOnDestroy().
 2) using takeUntil rxjs
@@ -1879,5 +1983,7 @@ generating dist Folder in angular :-
 	# using the cli directly
 	ng build --prod
 --> This time we are given four files instead of the five. The --prod flag tells Angular to make our application much smaller in size.
---> The build command also creates a new folder called dist for distribution. These are the files we can host on a server and our Angular app will load up.
---> We would just need to have our server using Apache or nginx serve all requests to this index.html file. Angular will take care of the rest.
+--> The build command also creates a new folder called dist for distribution. These are the files we can host on a server and our 
+Angular app will load up.
+--> We would just need to have our server using Apache or nginx serve all requests to this index.html file. Angular will take care 
+of the rest.
