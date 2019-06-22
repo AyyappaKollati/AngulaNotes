@@ -53,7 +53,8 @@ to compile and open the project in default browser use the following command
 ng new project-name
    we should not have underscore(_) in our project name.
    
-while creating angular project we can ignore generating the test files (Karma, E2E, spec files and configs (inside angular-cli.json),   etc...) by executing the following command
+while creating angular project we can ignore generating the test files (Karma, E2E, spec files and configs 
+(inside angular-cli.json),   etc...) by executing the following command
 		ng new project-name --skip-tests true
 		
 to create a routing file by the angular cli we will use the "ng new project-name --routing" command 
